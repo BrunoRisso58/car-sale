@@ -75,7 +75,7 @@ class BrandController extends Controller
         $brand->fill($request->all());
 
         if ($brand->isClean()) {
-            return new Response("Error", 422);
+            return new Response("Error. Change at least one data.", 422);
         }
 
         $brand->save();
