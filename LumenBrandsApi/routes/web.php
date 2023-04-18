@@ -13,6 +13,9 @@
 |
 */
 
-$router->get('/', function () use ($router) {
-    return $router->app->version();
-});
+$router->get('/brands', 'BrandController@index');
+$router->post('/brands', 'BrandController@store');
+$router->get('/brands/{id}', 'BrandController@show');
+$router->put('/brands/{id}', 'BrandController@update');
+$router->patch('/brands/{id}', 'BrandController@update');
+$router->delete('/brands/{id}', 'BrandController@destroy');
