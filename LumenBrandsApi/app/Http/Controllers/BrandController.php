@@ -4,12 +4,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Models\Brand;
+use App\Traits\ApiResponser;
 
 class BrandController extends Controller
 {
-
-    // TODO: create trait ApiResponser
-    // TODO: Implement successResponse() and errorResponse() on return
+    use ApiResponser;
 
     /**
      * Create a new controller instance.
@@ -24,18 +23,18 @@ class BrandController extends Controller
     /**
      * Return the list of brands
      *
-     * @return Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index()
     {
         $brands = Brand::all();
-        return $brands;
+        return $this->successResponse($brands);
     }
 
     /**
      * Create a new instance of brand
-     *
-     * @return Illuminate\Http\Response
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
     {
@@ -44,24 +43,25 @@ class BrandController extends Controller
         ];
         $this->validate($request, $rules);
         $brand = Brand::create($request->all());
-        return $brand;
+        return $this->successResponse($brand, Response::HTTP_CREATED);
     }
 
     /**
-     * Return the brand that matches with the given id
-     *
-     * @return Illuminate\Http\Response
+     * Return the brand that matches the given id
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
      */
     public function show($id)
     {
         $brand = Brand::findOrFail($id);
-        return $brand;
+        return $this->successResponse($brand);
     }
 
     /**
      * Update a brand
-     *
-     * @return Illuminate\Http\Response
+     * @param Request $request
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(Request $request, $id)
     {
@@ -75,24 +75,23 @@ class BrandController extends Controller
         $brand->fill($request->all());
 
         if ($brand->isClean()) {
-            return new Response("Error. Change at least one data.", 422);
+            return $this->errorResponse("Please change some information", Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
         $brand->save();
 
-        return $brand;
+        return $this->successResponse($brand);
     }
 
     /**
      * Delete a branch
-     *
-     * @return Illuminate\Http\Response
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy($id)
     {
         $brand = Brand::findOrFail($id);
         $brand->delete();
-        return $brand;
+        return $this->successResponse($brand);
     }
-
 }
