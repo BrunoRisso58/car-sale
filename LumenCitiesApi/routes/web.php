@@ -13,6 +13,9 @@
 |
 */
 
-$router->get('/', function () use ($router) {
-    return $router->app->version();
-});
+$router->get('/cities', 'CityController@index');
+$router->post('/cities', 'CityController@store');
+$router->get('/cities/{id}', 'CityController@show');
+$router->put('/cities/{id}', 'CityController@update');
+$router->patch('/cities/{id}', 'CityController@update');
+$router->delete('/cities/{id}', 'CityController@destroy');
