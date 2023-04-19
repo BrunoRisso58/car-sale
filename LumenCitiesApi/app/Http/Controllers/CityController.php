@@ -59,7 +59,8 @@ class CityController extends Controller
      */
     public function show($id)
     {
-        
+        $city = City::findOrFail($id);
+        return $this->successResponse($city);
     }
 
     /**
@@ -70,7 +71,27 @@ class CityController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+        $rules = [
+            'name' => 'required|max:256', // not the best approach because there could be different cities with the same name but it works in the scope of cities in my region
+            'state' => 'required|max:256',
+            'state_initials' => 'required|max:2',
+        ];
+        $this->validate($request, $rules);
+
+        $cityRequest = $request->all();
+        $cityRequest["city_state"] = "$request->name/$request->state_initials";
+
+        $city = City::findOrFail($id);
+
+        $city->fill($cityRequest);
+
+        if ($city->isClean()) {
+            return $this->errorResponse("Please change some information", Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $city->save();
+
+        return $this->successResponse($city);
     }
 
     /**
@@ -80,6 +101,8 @@ class CityController extends Controller
      */
     public function destroy($id)
     {
-        
+        $city = City::findOrFail($id);
+        $city->delete();
+        return $this->successResponse($city);
     }
 }
