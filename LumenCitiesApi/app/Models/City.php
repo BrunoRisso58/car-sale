@@ -19,6 +19,6 @@ class City extends Model implements AuthenticatableContract, AuthorizableContrac
      * @var array
      */
     protected $fillable = [
-        'name', 'state',
+        'name', 'state', 'state_initials', 'city_state'
     ];
 }

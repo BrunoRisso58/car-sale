@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 use App\Models\City;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Traits\ApiResponser;
 
 class CityController extends Controller
 {
+    use ApiResponser;
+
     /**
      * Create a new controller instance.
      *
@@ -23,7 +26,8 @@ class CityController extends Controller
      */
     public function index()
     {
-        
+        $cities = City::all();
+        return $this->successResponse($cities);
     }
 
     /**
@@ -33,7 +37,19 @@ class CityController extends Controller
      */
     public function store(Request $request)
     {
-        
+        $rules = [
+            'name' => 'required|max:256', // not the best approach because there could be different cities with the same name but it works in the scope of cities in my region
+            'state' => 'required|max:256',
+            'state_initials' => 'required|max:2',
+        ];
+        $this->validate($request, $rules);
+
+        $cityRequest = $request->all();
+        $cityRequest["city_state"] = "$request->name/$request->state_initials";
+
+        $city = City::create($cityRequest);
+
+        return $this->successResponse($city, Response::HTTP_CREATED);
     }
 
     /**
