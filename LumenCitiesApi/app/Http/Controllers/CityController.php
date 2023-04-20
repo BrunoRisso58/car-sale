@@ -44,6 +44,7 @@ class CityController extends Controller
         ];
         $this->validate($request, $rules);
 
+        // Adds a new attribute in the object called city_state
         $cityRequest = $request->all();
         $cityRequest["city_state"] = "$request->name/$request->state_initials";
 
