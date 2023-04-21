@@ -7,6 +7,8 @@ use Illuminate\Http\Response;
 
 class BrandController extends Controller
 {
+    // TODO: implement BrandService
+
     use ApiResponser;
 
     /**
