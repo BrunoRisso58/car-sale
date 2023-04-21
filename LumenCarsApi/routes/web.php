@@ -13,6 +13,9 @@
 |
 */
 
-$router->get('/', function () use ($router) {
-    return $router->app->version();
-});
+$router->get('/cars', 'CarController@index');
+$router->post('/cars', 'CarController@store');
+$router->get('/cars/{id}', 'CarController@show');
+$router->put('/cars/{id}', 'CarController@update');
+$router->patch('/cars/{id}', 'CarController@update');
+$router->delete('/cars/{id}', 'CarController@destroy');
