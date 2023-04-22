@@ -3,7 +3,7 @@
 namespace App\Services;
 use App\Traits\ConsumesExternalServices;
 
-class BrandService 
+class BrandService
 {
     use ConsumesExternalServices;
 

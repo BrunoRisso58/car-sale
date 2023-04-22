@@ -1,24 +1,28 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Services\BrandService;
 use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class BrandController extends Controller
 {
-    // TODO: implement BrandService
-
     use ApiResponser;
 
     /**
+     * The service to consume the brands microservice
+     * @var BrandService
+     */
+    public $brandService;
+
+    /**
      * Create a new controller instance.
-     *
      * @return void
      */
-    public function __construct()
+    public function __construct(BrandService $brandService) // Lumen passes an instance of BrandService when controller is called
     {
-        //
+        $this->brandService = $brandService;
     }
 
     /**
@@ -28,7 +32,7 @@ class BrandController extends Controller
      */
     public function index()
     {
-
+        return $this->successResponse($this->brandService->obtainBrands());
     }
 
     /**
@@ -38,7 +42,7 @@ class BrandController extends Controller
      */
     public function store(Request $request)
     {
-
+        return $this->successResponse($this->brandService->createBrand($request->all()), Response::HTTP_CREATED);
     }
 
     /**
@@ -48,7 +52,7 @@ class BrandController extends Controller
      */
     public function show($id)
     {
-
+        return $this->successResponse($this->brandService->obtainBrand($id));
     }
 
     /**
@@ -59,7 +63,7 @@ class BrandController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+        return $this->successResponse($this->brandService->editBrand($id, $request->all()));
     }
 
     /**
@@ -69,6 +73,6 @@ class BrandController extends Controller
      */
     public function destroy($id)
     {
-        
+        return $this->successResponse($this->brandService->deleteBrand($id));
     }
 }

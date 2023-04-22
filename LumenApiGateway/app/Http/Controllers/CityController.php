@@ -1,24 +1,29 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Services\CityService;
 use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class CityController extends Controller
 {
-    // TODO: implement CityService
-
     use ApiResponser;
+
+    /**
+     * The service to consume the cities microservice
+     * @var CityService
+     */
+    public $cityService;
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(CityService $cityService)
     {
-        //
+        $this->cityService = $cityService;
     }
 
     /**
@@ -27,7 +32,7 @@ class CityController extends Controller
      */
     public function index()
     {
-
+        return $this->successResponse($this->cityService->obtainCities());
     }
 
     /**
@@ -37,7 +42,7 @@ class CityController extends Controller
      */
     public function store(Request $request)
     {
-        
+        return $this->successResponse($this->cityService->createCity($request->all()), Response::HTTP_CREATED);
     }
 
     /**
@@ -47,7 +52,7 @@ class CityController extends Controller
      */
     public function show($id)
     {
-        
+        return $this->successResponse($this->cityService->obtainCity($id));
     }
 
     /**
@@ -58,7 +63,7 @@ class CityController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+        return $this->successResponse($this->cityService->editCity($id, $request->all()));
     }
 
     /**
@@ -68,6 +73,6 @@ class CityController extends Controller
      */
     public function destroy($id)
     {
-        
+        return $this->successResponse($this->cityService->deleteCity($id));
     }
 }

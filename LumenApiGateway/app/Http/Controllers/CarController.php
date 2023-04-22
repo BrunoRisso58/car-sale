@@ -1,24 +1,29 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Services\CarService;
 use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class CarController extends Controller
 {
-    // TODO: implement CarService
-
     use ApiResponser;
+
+    /**
+     * The service to consume the cars service
+     * @var CarService
+     */
+    public $carService;
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(CarService $carService)
     {
-        //
+        $this->carService = $carService;
     }
 
     /**
@@ -27,7 +32,7 @@ class CarController extends Controller
      */
     public function index()
     {
-
+        return $this->successResponse($this->carService->obtainCars());
     }
 
     /**
@@ -47,7 +52,7 @@ class CarController extends Controller
      */
     public function show($id)
     {
-        
+        return $this->successResponse($this->carService->obtainCar($id));
     }
 
     /**
@@ -68,6 +73,6 @@ class CarController extends Controller
      */
     public function destroy($id)
     {
-        
+        return $this->successResponse($this->carService->deleteCar($id));
     }
 }
