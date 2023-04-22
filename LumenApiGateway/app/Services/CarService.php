@@ -52,7 +52,7 @@ class CarService
      * @param array|string $data
      * @return string
      */
-    public function updateCar($id, $data)
+    public function editCar($id, $data)
     {
         return $this->performRequest('PUT', "/cars/{$id}", $data);
     }
