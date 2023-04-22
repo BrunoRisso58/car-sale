@@ -10,8 +10,6 @@ use Illuminate\Http\Response;
 
 class CarController extends Controller
 {
-    // TODO: implement store and update functions
-
     use ApiResponser;
 
     /**
