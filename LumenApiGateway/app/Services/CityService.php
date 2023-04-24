@@ -12,9 +12,15 @@ class CityService
      */
     public $baseUri;
 
+    /**
+     * The secret to consume the cities service
+     */
+    public $secret;
+
     public function __construct()
     {
         $this->baseUri = config('services.cities.base_uri');
+        $this->secret = config('services.cities.secret');
     }
 
     /**

@@ -12,9 +12,15 @@ class BrandService
      */
     public $baseUri;
 
+    /**
+     * The secret to consume the brands service
+     */
+    public $secret;
+
     public function __construct()
     {
         $this->baseUri = config('services.brands.base_uri');
+        $this->secret = config('services.brands.secret');
     }
 
     /**

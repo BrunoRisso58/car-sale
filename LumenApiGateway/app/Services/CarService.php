@@ -12,9 +12,15 @@ class CarService
      */
     public $baseUri;
 
+    /**
+     * The secret to consume the cars service
+     */
+    public $secret;
+
     public function __construct()
     {
         $this->baseUri = config('services.cars.base_uri');
+        $this->secret = config('services.cars.secret');
     }
 
     /**
