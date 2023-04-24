@@ -13,7 +13,8 @@
 |
 */
 
-$router->group(['middleware' => 'client.credentials'], function () use ($router) {
+$router->group(['middleware' => 'auth'], function () use ($router) {
+    
     /*
         Routes for brands
     */
@@ -46,4 +47,9 @@ $router->group(['middleware' => 'client.credentials'], function () use ($router)
     $router->put('/cars/{id}', 'CarController@update');
     $router->patch('/cars/{id}', 'CarController@update');
     $router->delete('/cars/{id}', 'CarController@destroy');
+
+    /*
+        Routes for users
+    */
+    $router->post('/register','UserController@store');
 });

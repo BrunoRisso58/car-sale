@@ -32,7 +32,9 @@ $app->withEloquent();
 */
 
 $app->configure('services');
+
 $app->configure('auth');
+\Dusterio\LumenPassport\LumenPassport::routes($app, ['prefix' => 'oauth']);
 
 /*
 |--------------------------------------------------------------------------
@@ -84,8 +86,7 @@ $app->configure('app');
 // ]);
 
 $app->routeMiddleware([
-    // 'auth' => App\Http\Middleware\Authenticate::class,
-    'client.credentials' => Laravel\Passport\Http\Middleware\CheckClientCredentials::class
+    'auth' => App\Http\Middleware\Authenticate::class,
 ]);
 
 /*
