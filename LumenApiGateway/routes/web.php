@@ -52,4 +52,5 @@ $router->group(['middleware' => 'auth'], function () use ($router) {
         Routes for users
     */
     $router->post('/register','UserController@store');
+    $router->get('/register/myuser','UserController@me');
 });
